@@ -7,6 +7,7 @@ require 'colorize'
 require_relative 'lib/common'
 require_relative 'lib/rspecdatshit'
 require_relative 'lib/utils'
+require_relative 'lib/decidim'
 
 # Bruw is a simple CLI for daily commands
 class Bruw < Thor
@@ -15,6 +16,9 @@ class Bruw < Thor
 
   desc 'utils SUBCOMMAND ...ARGS', 'useful commands'
   subcommand 'utils', Utils
+
+  desc 'dcd SUBCOMMAND ...ARGS', 'useful commands'
+  subcommand 'dcd', Decidim
 end
 
 Bruw.start(ARGV)
