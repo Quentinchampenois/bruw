@@ -9,6 +9,30 @@ Simple CLI for daily commands when working with Decidim projects.
 * Colorize
 * Rubocop
 
+### Getting started
+
+Export current folder to your `PATH`. It allows you to call the command `bruw` from everywhere.
+
+```
+export $PATH=$PATH:$(pwd)
+```
+
+#### Remove bruw from your PATH
+
+If you want to remove the bruw folder from your path, you can : 
+
+```
+echo $PATH
+
+output: <bin_folder>:<other_bin_folder>:<bruw_folder>
+```
+
+So you can just remove the path to the bruw project from the string, and then update the variable `$PATH`
+
+```
+export $PATH=<bin_folder>:<other_bin_folder>
+```
+
 ### Commands
 
 #### bruw
