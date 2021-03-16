@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'colorize'
-
 # RspecDatShit allows to run easily modified tests using rspec
 class RspecDatShit < Thor
   desc 'version', "Check project's ruby version"
@@ -89,14 +87,14 @@ class RspecDatShit < Thor
   end
 
   def command(value)
-    # "bundle exec rspec #{value.join(' ')}"
     "bundle exec rspec #{value.join(' ')}#{unique_line(value)}"
   end
 
   def unique_line(value)
     return if @unique_line.nil?
+    return '' unless value.length == 1
 
-    value.length == 1 ? ":#{@unique_line}" : ''
+    ":#{@unique_line}"
   end
 
   def pattern
@@ -109,9 +107,5 @@ class RspecDatShit < Thor
 
   def top_level
     `git rev-parse --show-toplevel`.chomp
-  end
-
-  def color_str(str, color)
-    str.colorize(color)
   end
 end

@@ -4,13 +4,14 @@
 
 require 'thor'
 require 'colorize'
+require_relative 'lib/common'
 require_relative 'lib/rspecdatshit'
 
 # Bruw is a simple CLI for daily commands
 class Bruw < Thor
   desc 'setup', 'Initialize project structure'
   def setup
-    puts 'TODO: Implement setup command'
+    puts 'TODO: Implement setup command'.colorize(:green)
   end
 
   desc 'datshit SUBCOMMAND ...ARGS', 'run easily modified specs using rspec'
