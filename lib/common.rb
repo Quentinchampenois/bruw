@@ -3,5 +3,5 @@
 require 'colorize'
 
 def color_str(str, color)
-  str.colorize(color)
+  str.colorize(color.to_sym)
 end
