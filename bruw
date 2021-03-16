@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+require 'thor'
+require 'colorize'
+
+# Bruw is a simple CLI for daily commands
+class Bruw < Thor
+  desc 'setup', 'Initialize project structure'
+  def setup
+    puts 'TODO: Implement setup command'
+  end
+end
+
+Bruw.start(ARGV)
