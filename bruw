@@ -4,6 +4,7 @@
 
 require 'thor'
 require 'colorize'
+require_relative 'lib/rspecdatshit'
 
 # Bruw is a simple CLI for daily commands
 class Bruw < Thor
@@ -11,6 +12,9 @@ class Bruw < Thor
   def setup
     puts 'TODO: Implement setup command'
   end
+
+  desc 'datshit SUBCOMMAND ...ARGS', 'run easily modified specs using rspec'
+  subcommand 'datshit', RspecDatShit
 end
 
 Bruw.start(ARGV)
