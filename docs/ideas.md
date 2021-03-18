@@ -9,3 +9,4 @@ Check Decidim version
 
 Curl file from specific decidim version and save it in current project 
 
+Check which files needs to be bumped (diff between local files and rawgithubcontent)

@@ -16,8 +16,6 @@ class Utils < Thor
   LONGDESC
   option :port, required: true, banner: 'Port number to be checked', aliases: '-p', type: :numeric
   option :kill, required: false, banner: 'Kill process running on specified port', aliases: '-k', type: :boolean
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def port
     if get_process_pid(options[:port]).empty?
       puts color_str("No process running on : #{options[:port]}", :green)
@@ -34,8 +32,6 @@ class Utils < Thor
     kill_process pid
     puts color_str("Process (pid: #{pid}) killed", :red)
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 
   private
 

@@ -8,7 +8,7 @@ require 'fileutils'
 class Decidim < Thor
   desc 'version', 'Print the current Decidim’s version'
   long_desc <<-LONGDESC
-    `bruw dcd version` checks the Decidim's version for the current project 
+    `bruw dcd version` checks the Decidim's version for the current project
 
     > $ bruw dcd version
   LONGDESC
@@ -23,26 +23,27 @@ class Decidim < Thor
 
   desc 'curl', 'curl specific file'
   long_desc <<-LONGDESC
-    `bruw dcd curl` allows to curl source code of specified path for a given version 
+    `bruw dcd curl` allows to curl source code of specified path for a given version
 
     > $ bruw dcd version
   LONGDESC
   option :path, required: false, banner: 'Full relative path from decidim root', aliases: '-p', type: :string
-  option :tag, required: false, banner: 'Tag has to have format vx.xx.x : Default current decidim version', aliases: '-t', type: :string
-  option :owner, required: false, banner: 'Owner name : Default \'decidim\'', aliases: '-o', type: :string
-  option :repo, required: false, banner: 'Repository name : Default \'decidim\'', aliases: '-r', type: :string
+  option :tag, required: false, banner: 'Tag has to have format vx.xx.x : Default current decidim version',
+               aliases: '-t', type: :string
+  option :owner, required: false, banner: "Owner name : Default 'decidim'", aliases: '-o', type: :string
+  option :repo, required: false, banner: "Repository name : Default 'decidim'", aliases: '-r', type: :string
   option :silent, required: false, banner: 'Disable request output', aliases: '-s', type: :boolean
   option :save, required: false, banner: 'Save output in relative path', aliases: '-s', type: :boolean
   def curl(path)
-
-    options[:tag] = "v#{options[:tag]}" if options[:tag][0] != 'v'
+    options[:tag] = "v#{options[:tag]}" if !options[:tag].nil? && !options[:tag]&.empty? && options[:tag][0] != 'v'
     url = "#{raw_github_based(options[:owner], options[:repo], options[:tag])}/#{path}"
     uri = URI.parse(url)
 
-    if Net::HTTP.get_response(uri).is_a?(Net::HTTPNotFound)
+    case Net::HTTP.get_response(uri)
+    when Net::HTTPNotFound
       puts color_str("Path not found ! \nurl : #{url}", :red)
-      return
-    elsif Net::HTTP.get_response(uri).is_a? Net::HTTPOK
+      nil
+    when Net::HTTPOK
       response = Net::HTTP.get uri
 
       if options[:save]
@@ -50,7 +51,7 @@ class Decidim < Thor
         create_path(path)
         save_file(path, response.chop)
 
-        puts color_str("File '#{path}' overwrite", :green)
+        puts color_str("Curl finished, please see '#{path}'", :green)
       else
         puts response
       end
@@ -67,7 +68,7 @@ class Decidim < Thor
 
       idx = line.strip.chars.index('(')
 
-      decidim_version = line.strip[idx+1..line.strip.size-2] unless idx.nil?
+      decidim_version = line.strip[idx + 1..line.strip.size - 2] unless idx.nil?
     end
 
     decidim_version

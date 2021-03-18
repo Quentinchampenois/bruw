@@ -19,7 +19,7 @@ class RspecDatShit < Thor
   long_desc <<-LONGDESC
     `bruw datshit exec` will execute all modified tests in git status
 
-    You can optionally specify a '--line' or '-l' parameter to specify a unique line to test#{' '}
+    You can optionally specify a '--line' or '-l' parameter to specify a unique line to test
 
     > $ bruw datshit exec
 
@@ -28,8 +28,6 @@ class RspecDatShit < Thor
     > $ bruw datshit exec -l 12
   LONGDESC
   option :line, required: false, banner: 'Specify a test line number', aliases: '-l', type: :numeric
-  # rubocop:disable Metrics/AbcSize
-  # rubocop:disable Metrics/MethodLength
   def exec
     return if check_version_warning.nil?
 
@@ -48,8 +46,6 @@ class RspecDatShit < Thor
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize
-  # rubocop:enable Metrics/MethodLength
 
   private
 
@@ -87,7 +83,7 @@ class RspecDatShit < Thor
   end
 
   def command(value)
-    "bundle exec rspec #{value.join(' ')}#{unique_line(value)}"
+    "bundle exec rspec #{value.join(" ")}#{unique_line(value)}"
   end
 
   def unique_line(value)
