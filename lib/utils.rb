@@ -10,22 +10,22 @@ class Utils < Thor
 
     You can optionally specify a '--kill' or '-k' parameter to kill the process using the specified port
 
-    > $ bruw utils port -p3000
+    > $ bruw utils port 3000
 
-    > $ bruw utils port -p3000 -k
+    > $ bruw utils port 3000 -k
   LONGDESC
-  option :port, required: true, banner: 'Port number to be checked', aliases: '-p', type: :numeric
+  # option :port, required: false, banner: 'Port number to be checked', aliases: '-p', type: :numeric
   option :kill, required: false, banner: 'Kill process running on specified port', aliases: '-k', type: :boolean
-  def port
-    if get_process_pid(options[:port]).empty?
-      puts color_str("No process running on : #{options[:port]}", :green)
+  def port(port)
+    if get_process_pid(port).empty?
+      puts color_str("No process running on : #{port}", :green)
       return
     end
 
-    pid = get_process_pid(options[:port]).chomp
+    pid = get_process_pid(port).chomp
 
     unless options[:kill]
-      puts "Process running on #{options[:port].to_s.colorize(:green)} has PID : #{pid.to_s.colorize(:green)}"
+      puts "Process running on #{port.to_s.colorize(:green)} has PID : #{pid.to_s.colorize(:green)}"
       return
     end
 
