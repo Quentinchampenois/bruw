@@ -23,7 +23,13 @@ RSpec.describe Bruw::Decidim do
 
   describe "#curl" do
     it "curl the target file on Decidim's official repository" do
-      expect(false).to be_truthy
+      settings = {
+          :owner => "decidim",
+          :repo => "decidim",
+          :version => "v0.23.4",
+          :path => "decidim-core/app/forms/decidim/attachment_form.rb"
+      }
+      expect(klass.curl(settings)).not_to be_empty
     end
 
     context "when selecting a specific version" do
