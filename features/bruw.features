@@ -5,4 +5,4 @@ Feature: Bruw
 
   Scenario: Get version
     When I run `bruw version`
-    Then the output should contain "0.0.1"
+    Then the output should contain "0.1.0"
