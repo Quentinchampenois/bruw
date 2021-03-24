@@ -1,9 +1,7 @@
-# frozen_string_literal: true
+source "https://rubygems.org"
 
-source 'https://rubygems.org'
+# Specify your gem's dependencies in bruw.gemspec
+gemspec
 
-gem 'colorize'
-gem 'thor'
-# gem "tty-prompt"
-
-gem 'rubocop'
+gem "rake", "~> 12.0"
+gem "rspec", "~> 3.0"

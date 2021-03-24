@@ -1,68 +1,44 @@
-# Bruw CLI
+# Bruw
 
-Simple CLI for daily commands when working with Decidim projects.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bruw`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-### Requirements
+TODO: Delete this and the text above, and describe your gem
 
-* Ruby >= 2.5 - recommended
-* Thor
-* Colorize
-* Rubocop
+## Installation
 
-### Getting started
+Add this line to your application's Gemfile:
 
-Export current folder to your `PATH`. It allows you to call the command `bruw` from everywhere.
-
-```
-export $PATH=$PATH:$(pwd)
+```ruby
+gem 'bruw'
 ```
 
-#### Remove bruw from your PATH
+And then execute:
 
-If you want to remove the bruw folder from your path, you can : 
+    $ bundle install
 
-```
-echo $PATH
+Or install it yourself as:
 
-output: <bin_folder>:<other_bin_folder>:<bruw_folder>
-```
+    $ gem install bruw
 
-So you can just remove the path to the bruw project from the string, and then update the variable `$PATH`
+## Usage
 
-```
-export $PATH=<bin_folder>:<other_bin_folder>
-```
+TODO: Write usage instructions here
 
-### Commands
+## Development
 
-#### bruw
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-Top level command, allows to define multiple subcommands
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-#### bruw datshit
-[Rspecdatshit](https://gist.github.com/armandfardeau/054f1869d4c15a3394129ca048232889) written by Armand Fardeau, was refactored to be used with Thor gem 
+## Contributing
 
-It allows to execute tests modified using Rspec. It is based on git status modified files
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/bruw. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/bruw/blob/master/CODE_OF_CONDUCT.md).
 
-Usage:
 
-Print Decidim ruby version
-```
-bruw datshit version
-```
+## License
 
-List modified tests in project
-```
-bruw datshit list
-```
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
-Execute rspec on modified tests in project
-```
-bruw datshit exec
-```
+## Code of Conduct
 
-Get help about a specific command
-```
-bruw datshit help [exec|list|version]
-```
-
+Everyone interacting in the Bruw project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/bruw/blob/master/CODE_OF_CONDUCT.md).
