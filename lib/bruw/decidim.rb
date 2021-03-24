@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Bruw
   class Decidim
     def self.version
@@ -8,15 +10,15 @@ module Bruw
 
     # Returns version between parentheses from gem info output
     def self.parse_gem_version
-      @decidim_version[/\(([^()]*)\)/, 1]
+      @current_version[/\(([^()]*)\)/, 1]
     end
 
     def self.decidim_app?
-      !get_current_decidim.nil? && !get_current_decidim.empty?
+      !current_version.nil? && !current_version.empty?
     end
 
-    def self.get_current_decidim
-      @decidim_version ||= `gem info decidim | grep decidim`
+    def self.current_version
+      @current_version ||= `gem info decidim | grep decidim`
     end
   end
 end
