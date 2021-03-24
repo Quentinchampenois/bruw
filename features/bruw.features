@@ -1,0 +1,8 @@
+Feature: Bruw
+  In order to get current version
+  As a CLI
+  I want to keep it easy-to-use
+
+  Scenario: Get version
+    When I run `bruw version`
+    Then the output should contain "0.0.1"

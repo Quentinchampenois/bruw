@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'bruw/cli'
+Bruw::CLI.start
