@@ -11,6 +11,6 @@ module Bruw
     end
 
     desc 'decidim SUBCOMMAND ...ARGS', 'Manage Decidim projects'
-    subcommand 'decidim', Decidim
+    subcommand 'decidim', Bruw::Commands::Decidim
   end
 end
