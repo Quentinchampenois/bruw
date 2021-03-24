@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     bruw (0.1.0)
-      activesupport
       thor
 
 GEM
