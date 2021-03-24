@@ -7,5 +7,8 @@ module Bruw
     def version
       puts VERSION
     end
+
+    desc 'decidim SUBCOMMAND ...ARGS', 'Manage Decidim projects'
+    subcommand 'decidim', Decidim
   end
 end

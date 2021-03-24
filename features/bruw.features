@@ -1,8 +1,10 @@
 Feature: Bruw
-  In order to get current version
-  As a CLI
-  I want to keep it easy-to-use
+  Bruw commands allows to
 
-  Scenario: Get version
+  Scenario: get current CLI version
     When I run `bruw version`
     Then the output should contain "0.1.0"
+
+  Scenario: have decidim subcommand
+    When I run `bruw decidim`
+    Then the output should contain "help"
