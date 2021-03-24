@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'thor'
+require "net/http"
 
 module Bruw
   module Commands
@@ -11,6 +12,24 @@ module Bruw
       LONGDESC
       def version
         puts "Current Decidim version is #{Bruw::Decidim.version&.colorize(:green)}"
+      rescue StandardError => e
+        puts e.message.colorize(:red)
+      end
+
+      desc "curl [RELATIVE_PATH]", "Curl given file against target github repository"
+      long_desc <<-LONGDESC
+        Allows to curl source code of specified path for a given version
+      LONGDESC
+      option :tag, required: false, banner: "Tag must have format vx.xx.x : Default current decidim version",
+                   aliases: "-t", type: :string
+      option :owner, required: false, banner: "Owner name : Default 'decidim'", aliases: "-o", type: :string
+      option :repo, required: false, banner: "Repository name : Default 'decidim'", aliases: "-r", type: :string
+      option :save, required: false, banner: "Save output in relative path", aliases: "-s", type: :boolean
+      def curl(path)
+        options[:path] = path
+        options[:version] = options[:tag]
+
+        puts Bruw::Decidim.curl(options)
       rescue StandardError => e
         puts e.message.colorize(:red)
       end
