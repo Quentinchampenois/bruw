@@ -5,7 +5,7 @@ module Bruw
     class Decidim < Thor
       desc 'version', 'Get the current decidim version'
       def version
-        puts Bruw::Decidim.version
+        puts "Current Decidim version is #{Bruw::Decidim.version&.colorize(:green)}"
       rescue StandardError => e
         puts e.message.colorize(:red)
       end
