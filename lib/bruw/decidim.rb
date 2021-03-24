@@ -17,7 +17,8 @@ module Bruw
     #   path : String - Target file relative path
     def self.curl(settings = {})
       base_url = github_repo_base(settings[:owner], settings[:repo], settings[:version])
-      content = curl_response parse_uri("#{base_url}/#{settings[:path]}")
+      uri = "#{base_url}/#{settings[:path]}"
+      content = curl_response parse_uri(uri)
       raise StandardError, "No content for specified path : \n> #{uri}" if content.nil? || content.empty?
 
       content
