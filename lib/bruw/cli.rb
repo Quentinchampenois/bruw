@@ -5,7 +5,7 @@ module Bruw
   class CLI < Thor
     desc "version", "Get the current cli version"
     def version
-      puts Bruw::Base.version
+      puts VERSION
     end
   end
 end
