@@ -17,12 +17,14 @@ module Bruw
     #   path : String - Target file relative path
     def self.curl(settings = {})
       base_url = github_repo_base(settings[:owner], settings[:repo], settings[:version])
-      uri = URI.parse "#{base_url}/#{settings[:path]}"
-
-      content = curl_response(uri)
+      content = curl_response parse_uri("#{base_url}/#{settings[:path]}")
       raise StandardError, "No content for specified path : \n> #{uri}" if content.nil? || content.empty?
 
       content
+    end
+
+    def self.parse_uri(uri)
+      URI.parse uri
     end
 
     # Returns version between parentheses from gem info output
