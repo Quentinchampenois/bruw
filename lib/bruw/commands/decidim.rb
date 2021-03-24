@@ -3,7 +3,7 @@
 module Bruw
   module Commands
     class Decidim < Thor
-      desc 'version', 'Get the current decidim version'
+      desc "version", "Get the current decidim version"
       long_desc <<-LONGDESC
         Checks the Decidim version for the current project based on the bundler gem infos
       LONGDESC

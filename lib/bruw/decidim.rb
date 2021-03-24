@@ -3,7 +3,7 @@
 module Bruw
   class Decidim
     def self.version
-      raise StandardError, 'Not in Decidim project' unless decidim_app?
+      raise StandardError, "Not in Decidim project" unless decidim_app?
 
       parse_gem_version
     end
