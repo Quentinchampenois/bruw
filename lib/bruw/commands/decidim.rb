@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'thor'
+
 module Bruw
   module Commands
     class Decidim < Thor
