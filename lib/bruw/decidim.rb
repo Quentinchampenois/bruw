@@ -50,7 +50,7 @@ module Bruw
     end
 
     def self.current_version
-      @current_version ||= `gem info decidim | grep decidim`
+      @current_version ||= `bundle info decidim | grep decidim | grep "*"`
     end
 
     def self.curl_response(uri)
