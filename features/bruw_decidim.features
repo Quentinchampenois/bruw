@@ -24,3 +24,18 @@ Feature: Bruw Decidim
     ERROR: "bruw decidim curl" was called with no arguments
     Usage: "bruw decidim curl [RELATIVE_PATH]"
     """
+  Scenario: curl file from outside a decidim project
+    When I run `bruw decidim curl decidim-core/app/forms/decidim/attachment_form.rb`
+    And I don't specify version
+    Then the output should contain:
+    """
+    No content for specified path :
+    > https://raw.githubusercontent.com/decidim/decidim/v/decidim-core/app/forms/decidim/attachment_form.rb
+    """
+  Scenario: curl file using the current project version
+    Given I am in a Decidim project
+    When I run `bruw decidim curl decidim-core/app/forms/decidim/attachment_form.rb`
+    Then the output should contain:
+    """
+    # Frozen string literals
+    """
