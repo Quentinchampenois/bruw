@@ -2,6 +2,23 @@
 
 module Bruw
   class Git
+    # Returns a list of repos that match specified patterns pattern
+    def self.repos(owner, pattern = "", without = "")
+      cmd = "gh repo list #{owner}"
+      cmd = "#{cmd} | grep #{pattern}" unless pattern.nil? || pattern.empty?
+      cmd = "#{cmd} | grep -v #{without}" unless without.nil? || without.empty?
+
+      repos = `#{cmd}`.gsub!(/\s+/, " ").split
+
+      repos = repos.select do |repo|
+        repo.start_with?(owner)
+      end
+
+      repos.map do |repo|
+        repo.split("/")[1]
+      end
+    end
+
     def self.remotes(pattern = "")
       return `git remote` if pattern.empty?
 
@@ -25,6 +42,10 @@ module Bruw
         puts "Removing #{remote.colorize(:green)}..."
         `git remote remove #{remote}`
       end
+    end
+
+    def self.cmd_exists?(cmd)
+      !`which #{cmd}`.empty?
     end
 
     def self.git?

@@ -15,6 +15,37 @@ module Bruw
         puts e.message.colorize(:red)
       end
 
+      desc "add-remotes", "Add several remote at once"
+      long_desc <<-LONGDESC
+        Add several remote at once
+      LONGDESC
+      option :pattern, required: false, banner: "Specify repo name pattern to match", aliases: "-p", type: :string
+      option :without, required: false, banner: "Specify repo name pattern that must not match", aliases: "-w", type: :string
+      option :all, required: false, banner: "Disable selection and add all repos", aliases: "-a", type: :boolean, default: false
+      def add_remotes(owner = "OpenSourcePolitics")
+        unless Bruw::Git.cmd_exists?("gh")
+          raise StandardError, "Please install Github CLI for using this command
+
+You can install it using brew
+
+`brew install gh` or upgrade `brew upgrade gh`
+
+This command needs at least v1.7.0 for command repo list (https://github.com/cli/cli/releases/tag/v1.7.0)
+Official repository : https://github.com/cli/cli"
+        end
+        prompt = TTY::Prompt.new
+
+        remotes = Bruw::Git.repos(owner, options[:pattern], options[:without])
+
+        remotes = prompt.multi_select("Select the git remote you want to add", remotes) unless options[:all]
+
+        remotes.each do |remote|
+          `git remote add #{remote} git@github.com:#{owner}/#{remote}.git`
+        end
+      rescue StandardError => e
+        puts e.message.colorize(:red)
+      end
+
       desc "branch REMOTE BRANCH", "Create branch and removes existing one"
       long_desc <<-LONGDESC
         This command allows to create locally the specified git branch for the given remote
