@@ -23,14 +23,21 @@ module Bruw
 
         PATTERN - String :: Allows to find remote where name begins by the PATTERN specified :: DEFAULT 'decidim-'
       LONGDESC
+      option :interactive, required: false, banner: "Run in interactive mode", aliases: "-i", type: :boolean
       def prune(pattern = "decidim-")
         prompt = TTY::Prompt.new
 
         remotes = Bruw::Git.remotes(pattern)
+
         raise StandardError, "No git remotes to remove" unless remotes.count.positive?
 
-        puts "Found remotes :"
-        puts remotes
+        if options[:interactive]
+          remotes = prompt.multi_select("Select the git remote to remove", remotes)
+        else
+          puts "Found remotes :"
+          puts remotes
+        end
+
         raise StandardError, "bruw decidim prune canceled" unless prompt.yes?("Do you really want to prune #{remotes.count.to_s.colorize(:green)} remotes ?")
 
         Bruw::Git.prune_remotes(remotes)
