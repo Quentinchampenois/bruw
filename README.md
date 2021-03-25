@@ -20,6 +20,13 @@ Or install it yourself as:
 
     $ gem install bruw
 
+Install gem locally using Makefile
+
+    $ make 
+    
+If you use rbenv and you want to install it for several version, you will have to switch ruby version first
+
+    $ rbenv local [VERSION] && make
 ## Usage
 
 TODO: Write usage instructions here
