@@ -12,6 +12,8 @@ module Bruw
  Default remote is Origin
       LONGDESC
       def open(remote = "origin")
+        raise StandardError, "Not in git repository" unless Bruw::Git.git?
+
         remote = Bruw::Git.remotes(remote)
         path = Bruw::Git.find_path(remote)
 
