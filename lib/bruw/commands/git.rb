@@ -15,6 +15,19 @@ module Bruw
         puts e.message.colorize(:red)
       end
 
+      desc "branch REMOTE BRANCH", "Get all current git remotes"
+      long_desc <<-LONGDESC
+        Get all current git remotes
+      LONGDESC
+      def branch(remote, branch)
+        raise StandardError, "Not in git repository" unless Bruw::Git.git?
+
+        Bruw::Git.fetch(remote)
+        puts Bruw::Git.branch(remote, branch)
+      rescue StandardError => e
+        puts e.message.colorize(:red)
+      end
+
       desc "add-remote REPOSITORY", "Add new remote linked to github repository"
       long_desc <<-LONGDESC
         Add new remote linked to github repository
@@ -60,12 +73,6 @@ module Bruw
         puts "Remotes successfully removed !".colorize(:green)
       rescue StandardError => e
         puts e.message.colorize(:red)
-      end
-
-      private
-
-      def git_repository?
-        Dir.exist?(".git")
       end
     end
   end
