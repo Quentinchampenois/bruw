@@ -11,5 +11,8 @@ module Bruw
 
     desc "decidim SUBCOMMAND ...ARGS", "Manage Decidim projects"
     subcommand "decidim", Bruw::Commands::Decidim
+
+    desc "git SUBCOMMAND ...ARGS", "Manage Git projects"
+    subcommand "git", Bruw::Commands::Git
   end
 end
