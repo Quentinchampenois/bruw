@@ -29,9 +29,41 @@ module Bruw
         options[:path] = path
         options[:version] = options[:tag]
 
-        puts Bruw::Decidim.curl(options)
+        response = Bruw::Decidim.curl(options)
+
+        if options[:save]
+          path = strip_path(path)
+          create_path(path)
+          save_file(path, response.chop)
+
+          puts "Curl finished, please see '#{path}'".colorize(:green)
+        else
+          puts response.chop
+        end
       rescue StandardError => e
         puts e.message.colorize(:red)
+      end
+
+      private
+
+      def save_file(path, content)
+        File.open(path, 'w') do |f|
+          f.puts content
+        end
+
+        puts "File '#{path}' created.".colorize(:green)
+      end
+
+      def create_path(path)
+        return if Dir.exist?(path)
+
+        FileUtils.mkpath(File.dirname(path))
+      end
+
+      def strip_path(path)
+        return path unless Bruw::Decidim.osp_app?
+
+        path.split('/')[1..].join('/')
       end
     end
   end
