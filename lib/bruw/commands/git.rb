@@ -15,6 +15,22 @@ module Bruw
         puts e.message.colorize(:red)
       end
 
+      desc "add-remote REPOSITORY", "Add new remote linked to github repository"
+      long_desc <<-LONGDESC
+        Add new remote linked to github repository
+      LONGDESC
+      option :owner, required: false, banner: "Owner of the specified remote", aliases: "-o", type: :string, default: "OpenSourcePolitics"
+      def add_remote(repository)
+        prompt = TTY::Prompt.new
+        path = "#{options[:owner]}/#{repository}"
+        return unless prompt.yes?("Adding remote #{repository} linked to repository : https://github.com/#{path}")
+
+        `git remote add #{repository} git@github.com:#{path}.git`
+        puts "Remote #{repository.colorize(:green)} successfully created"
+      rescue StandardError => e
+        puts e.message.colorize(:red)
+      end
+
       desc "prune [PATTERN]", "Prune all git remotes"
       long_desc <<-LONGDESC
         This command will remove all git remotes except origin
@@ -44,6 +60,12 @@ module Bruw
         puts "Remotes successfully removed !".colorize(:green)
       rescue StandardError => e
         puts e.message.colorize(:red)
+      end
+
+      private
+
+      def git_repository?
+        Dir.exist?(".git")
       end
     end
   end
