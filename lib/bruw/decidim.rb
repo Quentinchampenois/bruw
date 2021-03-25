@@ -51,12 +51,12 @@ module Bruw
     end
 
     def self.current_version
-      lines = File.open('Gemfile.lock')
-      decidim_version = ''
+      lines = File.open("Gemfile.lock")
+      decidim_version = ""
       lines.each do |line|
         next unless /decidim \((?!=).+/i =~ line
 
-        idx = line.strip.chars.index('(')
+        idx = line.strip.chars.index("(")
 
         decidim_version = line.strip[idx + 1..line.strip.size - 2] unless idx.nil?
       end

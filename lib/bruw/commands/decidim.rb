@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'thor'
+require "thor"
 require "net/http"
 
 module Bruw
@@ -47,7 +47,7 @@ module Bruw
       private
 
       def save_file(path, content)
-        File.open(path, 'w') do |f|
+        File.open(path, "w") do |f|
           f.puts content
         end
 
@@ -63,7 +63,7 @@ module Bruw
       def strip_path(path)
         return path unless Bruw::Decidim.osp_app?
 
-        path.split('/')[1..].join('/')
+        path.split("/")[1..].join("/")
       end
     end
   end
