@@ -15,11 +15,14 @@ module Bruw
         puts e.message.colorize(:red)
       end
 
-      desc "branch REMOTE BRANCH", "Get all current git remotes"
+      desc "branch REMOTE BRANCH", "Create branch and removes existing one"
       long_desc <<-LONGDESC
-        Get all current git remotes
+        This command allows to create locally the specified git branch for the given remote
+
+        It fetch the git remote and then DESTROY the existing branch
       LONGDESC
       def branch(remote, branch)
+        raise StandardError, "You have uncommitted work, please commit or stash work before" if Bruw::Git.local_changes?
         raise StandardError, "Not in git repository" unless Bruw::Git.git?
 
         Bruw::Git.fetch(remote)

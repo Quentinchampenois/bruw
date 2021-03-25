@@ -9,7 +9,8 @@ module Bruw
     end
 
     def self.branch(remote, branch)
-      `git branch -D #{branch} && git checkout #{remote}/#{branch} && git switch -c #{branch}`
+      `git branch -D #{branch}` if branch_exists?(branch)
+      `git checkout #{remote}/#{branch} && git switch -c #{branch}`
     end
 
     def self.fetch(remote)
@@ -28,6 +29,14 @@ module Bruw
 
     def self.git?
       Dir.exist?(".git")
+    end
+
+    def self.branch_exists?(branch)
+      !`git branch --list #{branch}`.empty?
+    end
+
+    def self.local_changes?
+      !`git status`.match(/Changes not staged for commit:/).nil?
     end
   end
 end
