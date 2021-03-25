@@ -5,6 +5,22 @@ require "thor"
 module Bruw
   module Commands
     class Git < Thor
+      desc "open REMOTE", "Open current repository in browser"
+      long_desc <<-LONGDESC
+        Open current repository in browser
+
+ Default remote is Origin
+      LONGDESC
+      def open(remote = "origin")
+        remote = Bruw::Git.remotes(remote)
+        path = Bruw::Git.find_path(remote)
+
+        current_branch = `git branch --show-current`
+        `open https://github.com/#{path}/tree/#{current_branch}`
+      rescue StandardError => e
+        puts e.message.colorize(:red)
+      end
+
       desc "remotes", "Get all current git remotes"
       long_desc <<-LONGDESC
         Get all current git remotes

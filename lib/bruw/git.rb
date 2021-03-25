@@ -25,6 +25,11 @@ module Bruw
       `git remote | grep ^#{pattern}`.split
     end
 
+    def self.find_path(remote)
+      path = `git remote -v | grep #{remote} | cut -d' ' -f1 | head -n1`.split
+      path[1].split(":")[1].split(".")[0]
+    end
+
     def self.branch(remote, branch)
       `git branch -D #{branch}` if branch_exists?(branch)
       `git checkout #{remote}/#{branch} && git switch -c #{branch}`
