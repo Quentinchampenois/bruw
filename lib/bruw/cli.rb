@@ -10,29 +10,45 @@ module Bruw
     end
 
     desc "zip TARGET DESTINATION", "Compress target"
+    option :tar, required: false, banner: "Use tar, zip by default", aliases: "-t", type: :boolean, default: false
     def zip(target, destination = ".")
       target = Bruw::Base.strip_path(target)
       dest = Bruw::Base.strip_path(destination)
-      final = "#{dest}/#{target}.zip"
+      extension = if options[:tar]
+                    "tar.gz"
+                  else
+                    "zip"
+                  end
+      final = "#{dest}/#{target}.#{extension}"
 
       raise StandardError, "File already existing : #{final}" if File.exist?(final)
 
       Bruw::Base.create_path(dest) unless Dir.exist?(dest)
 
-      `zip -r #{final} #{target}`
-      puts "Compression finished, find file at".colorize(:green)
+      `tar -zcf #{final} #{target}` if options[:tar]
+      `zip -r #{final} #{target}` unless options[:tar]
+
+      puts "Compression finished !".colorize(:green)
       puts "> #{final}"
     rescue StandardError => e
       puts e.message.colorize(:red)
     end
 
-    desc "unzip TARGET", "Compress target"
+    desc "unzip TARGET", "Decompress and unpack target"
+    option :zip, required: false, banner: "Force decompression with zip", aliases: "-z", type: :boolean, default: false
+    option :tar, required: false, banner: "Force decompression with tar", aliases: "-t", type: :boolean, default: false
     def unzip(target)
       raise StandardError, "File '#{target}' does not exists" unless File.exist?(target)
 
-      `unzip #{target}`
-      puts "Decompression finished, find file at".colorize(:green)
-      puts "> #{target}"
+      if target.end_with?(".zip") || options[:zip]
+        `unzip #{target}`
+      elsif target.end_with?(".tar.gz") || options[:tar]
+        `tar -zxf #{target}`
+      else
+        raise StandardError, "Unknown tool to use"
+      end
+
+      puts "Decompression finished !".colorize(:green)
     rescue StandardError => e
       puts e.message.colorize(:red)
     end

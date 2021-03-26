@@ -14,9 +14,9 @@ module Bruw
     end
 
     def self.create_path(path)
-    return if Dir.exist?(path)
+      return if Dir.exist?(path)
 
-    FileUtils.mkpath(path)
+      FileUtils.mkpath(path)
     end
   end
 end
