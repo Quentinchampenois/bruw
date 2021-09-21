@@ -22,12 +22,19 @@ module Bruw
       LONGDESC
       option :tag, required: false, banner: "Tag must have format vx.xx.x : Default current decidim version",
                    aliases: "-t", type: :string
+      option :branch, required: false, banner: "Remote branch to curl",
+                   aliases: "-b", type: :string
       option :owner, required: false, banner: "Owner name : Default 'decidim'", aliases: "-o", type: :string
       option :repo, required: false, banner: "Repository name : Default 'decidim'", aliases: "-r", type: :string
       option :save, required: false, banner: "Save output in relative path", aliases: "-s", type: :boolean
       def curl(path)
         options[:path] = path
-        options[:version] = options[:tag]
+
+        options[:version] = if options[:branch].present?
+                              options[:branch]
+                            else
+                              options[:tag]
+                            end
 
         response = Bruw::Decidim.curl(options)
 
