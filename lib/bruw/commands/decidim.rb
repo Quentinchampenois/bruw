@@ -30,10 +30,10 @@ module Bruw
       def curl(path)
         options[:path] = path
 
-        options[:version] = if options[:branch].present?
+        options[:version] = if !options[:branch].nil? || !options[:branch].empty?
                               options[:branch]
                             else
-                              options[:tag]
+                              "v#{options[:tag]}"
                             end
 
         response = Bruw::Decidim.curl(options)

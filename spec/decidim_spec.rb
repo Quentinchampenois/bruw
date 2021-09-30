@@ -21,20 +21,22 @@ RSpec.describe Bruw::Decidim do
   end
 
   describe "#curl" do
+    let(:settings) { { owner: owner, repo: repo, version: version_tag, path: path } }
+
+    let(:version_tag) { "0.23.4" }
+    let(:owner) { "decidim" }
+    let(:repo) { "decidim" }
+    let(:path) { "decidim-core/app/forms/decidim/attachment_form.rb" }
+    let(:branch) { nil }
+
     context "when everything is ok" do
+      let(:version_tag) { "v0.23.4" }
+
       before do
-        allow(klass).to receive(:parse_gem_version).and_return("0.23.4")
         allow(klass).to receive(:curl_response).with(URI.parse("https://raw.githubusercontent.com/decidim/decidim/v0.23.4/decidim-core/app/forms/decidim/attachment_form.rb")).and_return("Content file from github repository")
       end
 
       it "curl the target file on Decidim's official repository" do
-        settings = {
-          owner: "decidim",
-          repo: "decidim",
-          version: "v0.23.4",
-          path: "decidim-core/app/forms/decidim/attachment_form.rb"
-        }
-
         expect(klass.curl(settings)).not_to be_empty
         expect(klass).to receive(:curl_response).with(URI.parse("https://raw.githubusercontent.com/decidim/decidim/v0.23.4/decidim-core/app/forms/decidim/attachment_form.rb"))
         expect(klass.curl(settings)).to eq("Content file from github repository")
@@ -42,16 +44,15 @@ RSpec.describe Bruw::Decidim do
     end
 
     context "when file does not exists in github repository" do
+      let(:owner) { "dummy" }
+      let(:repo) { "repo" }
+      let(:version_tag) { "v0.23.4" }
+      let(:path) { "unknown/path/dummy_file.txt" }
+
       before do
-        allow(klass).to receive(:curl_response).with(URI.parse("https://raw.githubusercontent.com/dummy/repo/v/unknown/path/dummy_file.txt")).and_return(nil)
+        allow(klass).to receive(:curl_response).with(URI.parse("https://raw.githubusercontent.com/dummy/repo/v0.23.4/unknown/path/dummy_file.txt")).and_return(nil)
       end
       it "raises an error" do
-        settings = {
-          owner: "dummy",
-          repo: "repo",
-          version: "",
-          path: "unknown/path/dummy_file.txt"
-        }
         expect { klass.curl(settings) }.to raise_error StandardError
       end
     end
