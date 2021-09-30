@@ -5,7 +5,7 @@ module Bruw
     def self.version
       raise StandardError, "Not in Decidim project" unless decidim_app?
 
-      current_version
+      parse_gem_version
     end
 
     # curl allows to curl a specific file in the target repository
@@ -45,7 +45,6 @@ module Bruw
       owner = "decidim" if owner.nil? || owner.empty?
       repo = "decidim" if repo.nil? || repo.empty?
       version = "v#{current_version}" if version.nil? || version.empty?
-      version = "v#{version}" unless version.start_with?("v")
 
       "https://raw.githubusercontent.com/#{owner}/#{repo}/#{version}"
     end

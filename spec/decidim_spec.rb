@@ -11,12 +11,11 @@ RSpec.describe Bruw::Decidim do
     context "when in decidim project" do
       before do
         allow(klass).to receive(:decidim_app?).and_return(true)
-        allow(klass).to receive(:parse_gem_version).and_return("0.23.4")
+        allow(klass).to receive(:current_version).and_return("decidim (0.24.3)")
       end
 
       it "returns the current decidim version" do
-        expect(klass.version).not_to be nil
-        expect(klass.version).to eq("0.23.4")
+        expect(klass.version).to eq("0.24.3")
       end
     end
   end
@@ -32,7 +31,7 @@ RSpec.describe Bruw::Decidim do
         settings = {
           owner: "decidim",
           repo: "decidim",
-          version: "",
+          version: "v0.23.4",
           path: "decidim-core/app/forms/decidim/attachment_form.rb"
         }
 
