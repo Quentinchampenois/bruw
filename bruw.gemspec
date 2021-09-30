@@ -14,12 +14,9 @@ Gem::Specification.new do |spec|
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = 'https://github.com/quentinchampenois/bruw'
-  # spec.metadata["changelog_uri"] = 'https://github.com/quentinchampenois/bruw'
 
   spec.add_development_dependency "bundler", ">= 1.0.0"
   spec.add_development_dependency "rspec", "~> 2.6"
-  spec.add_development_dependency "cucumber"
-  spec.add_development_dependency "aruba"
 
   spec.add_dependency "thor"
 
