@@ -11,7 +11,7 @@ RSpec.describe Bruw::Decidim do
     context "when in decidim project" do
       before do
         allow(klass).to receive(:decidim_app?).and_return(true)
-        allow(klass).to receive(:current_version).and_return("decidim (0.24.3)")
+        allow(klass).to receive(:current_version).and_return("0.24.3")
       end
 
       it "returns the current decidim version" do

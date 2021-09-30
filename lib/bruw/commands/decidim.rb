@@ -29,12 +29,7 @@ module Bruw
       option :save, required: false, banner: "Save output in relative path", aliases: "-s", type: :boolean
       def curl(path)
         options[:path] = path
-
-        options[:version] = if !options[:branch].nil? || !options[:branch].empty?
-                              options[:branch]
-                            else
-                              "v#{options[:tag]}"
-                            end
+        options[:version] = find_version_for_curl options
 
         response = Bruw::Decidim.curl(options)
 
@@ -71,6 +66,18 @@ module Bruw
         return path unless Bruw::Decidim.osp_app?
 
         path.split("/")[1..].join("/")
+      end
+
+      def find_version_for_curl(options)
+        if !options[:branch].nil? && !options[:branch].empty?
+          options[:branch]
+        elsif !options[:tag].nil? && !options[:tag].empty?
+          return options[:tag] if options[:tag].start_with?("v")
+
+          "v#{options[:tag]}"
+        else
+          "v#{Bruw::Decidim.version}"
+        end
       end
     end
   end

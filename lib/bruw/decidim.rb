@@ -5,7 +5,7 @@ module Bruw
     def self.version
       raise StandardError, "Not in Decidim project" unless decidim_app?
 
-      parse_gem_version
+      current_version
     end
 
     # curl allows to curl a specific file in the target repository
@@ -26,11 +26,6 @@ module Bruw
 
     def self.parse_uri(uri)
       URI.parse uri
-    end
-
-    # Returns version between parentheses from gem info output
-    def self.parse_gem_version
-      current_version[/\(([^()]*)\)/, 1]
     end
 
     def self.decidim_app?
