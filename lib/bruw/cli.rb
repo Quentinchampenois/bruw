@@ -58,5 +58,8 @@ module Bruw
 
     desc "git SUBCOMMAND ...ARGS", "Manage Git projects"
     subcommand "git", Bruw::Commands::Git
+
+    desc "fs SUBCOMMAND ...ARGS", "Manage filesystem"
+    subcommand "fs", Bruw::Commands::Fs
   end
 end
