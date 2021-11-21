@@ -27,7 +27,7 @@ module Bruw
 
     def self.find_path(remote)
       path = `git remote -v | grep #{remote} | cut -d' ' -f1 | head -n1`.split
-      path[1].split(":")[1].split(".")[0]
+      path[1].match?("https") ? path[1].split(":")[1].split("com/")[1].split(".")[0] : path[1].split(":")[1].split(".")[0]
     end
 
     def self.branch(remote, branch)
